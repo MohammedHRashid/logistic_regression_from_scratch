@@ -4,6 +4,7 @@ import os
 import numpy as np
 from datetime import datetime
 
+
 def start_run(run_name=None):
     ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     run_name = run_name or f"run_{ts}"
@@ -11,13 +12,16 @@ def start_run(run_name=None):
     os.makedirs(run_dir, exist_ok=True)
     return run_dir
 
+
 def log_params(run_dir, params: dict):
     with open(os.path.join(run_dir, "params.json"), "w") as f:
         json.dump(params, f, indent=2)
 
+
 def log_metrics(run_dir, metrics: dict):
     with open(os.path.join(run_dir, "metrics.json"), "w") as f:
         json.dump(metrics, f, indent=2)
+
 
 def log_model(run_dir, model_dir):
     """
@@ -32,6 +36,8 @@ def log_model(run_dir, model_dir):
 # -----------------------------
 # Log a single metric (for train/val)
 # -----------------------------
+
+
 def log_metric(run_dir, name, value, step=None):
     path = os.path.join(run_dir, "metrics.json")
     if os.path.exists(path):
@@ -47,6 +53,8 @@ def log_metric(run_dir, name, value, step=None):
 # -----------------------------
 # Baseline stats
 # -----------------------------
+
+
 def log_baseline(run_dir, X_train):
     baseline = {
         "mean": X_train.mean(axis=0).tolist(),
@@ -54,6 +62,7 @@ def log_baseline(run_dir, X_train):
     }
     with open(os.path.join(run_dir, "baseline.json"), "w") as f:
         json.dump(baseline, f, indent=2)
+
 
 def load_baseline(run_dir):
     path = os.path.join(run_dir, "baseline.json")
@@ -65,6 +74,8 @@ def load_baseline(run_dir):
 # -----------------------------
 # Fetch latest run
 # -----------------------------
+
+
 def get_latest_run():
     runs = sorted(os.listdir("mlruns"))
     if not runs:

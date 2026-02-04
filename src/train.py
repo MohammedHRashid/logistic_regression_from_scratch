@@ -5,8 +5,14 @@ from src.mlflow_lite import log_metric
 
 
 def train_logistic_regression(
-    X, y, run_id=None, lr=0.01, epochs=1000, lambda_=0.0, X_val=None, y_val=None
-):
+        X,
+        y,
+        run_id=None,
+        lr=0.01,
+        epochs=1000,
+        lambda_=0.0,
+        X_val=None,
+        y_val=None):
     """
     Train logistic regression with gradient descent.
     Logs training and validation metrics if run_id is provided.
@@ -33,7 +39,11 @@ def train_logistic_regression(
         bias -= lr * db
 
         # Training loss
-        loss = compute_loss(y, y_hat, lambda_, weights if lambda_ > 0 else None)
+        loss = compute_loss(
+            y,
+            y_hat,
+            lambda_,
+            weights if lambda_ > 0 else None)
         losses.append(loss)
 
         # Log training metrics
@@ -51,7 +61,9 @@ def train_logistic_regression(
 
         # Print progress every 100 epochs
         if i % 100 == 0 or i == epochs - 1:
-            val_str = f", Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}" if X_val is not None else ""
+            val_str = f", Val Loss: {
+                val_loss:.4f}, Val Acc: {
+                val_acc:.4f}" if X_val is not None else ""
             print(f"Epoch {i}/{epochs}, Loss: {loss:.4f}{val_str}")
 
     return weights, bias, losses

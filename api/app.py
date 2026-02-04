@@ -6,36 +6,43 @@ from src.monitoring import compute_data_drift, is_drift, continuous_eval
 
 app = Flask(__name__)
 
+
 @app.route("/", methods=["GET"])
 def home():
     return "Raisin classifier API is running!"
+
 
 @app.route("/predict", methods=["POST"])
 def predict_api():
     data = request.json  # expects {"features": [[...], [...]]}
     features = np.array(data["features"], dtype=float)
-    
+
     latest = get_latest_run()
     if latest is None:
         return jsonify({"error": "No model available"}), 400
     model_dir = latest["run_dir"]
-    
+
     weights = np.load(f"{model_dir}/weights.npy")
     bias = np.load(f"{model_dir}/bias.npy")
-    
+
     probs = 1 / (1 + np.exp(-np.dot(features, weights) - bias))
     preds = (probs >= 0.5).astype(int)
-    
+
     return jsonify({
         "predictions": preds.tolist(),
         "probabilities": probs.tolist()
     })
 
+
 @app.route("/monitor", methods=["POST"])
 def monitor_api():
     data = request.json
     X_new = np.array(data["features"], dtype=float)
-    y_new = np.array(data.get("labels", []), dtype=int) if "labels" in data else None
+    y_new = np.array(
+        data.get(
+            "labels",
+            []),
+        dtype=int) if "labels" in data else None
 
     latest = get_latest_run()
     if latest is None:
@@ -65,6 +72,7 @@ def monitor_api():
         response["continuous_accuracy"] = float(acc)
 
     return jsonify(response)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

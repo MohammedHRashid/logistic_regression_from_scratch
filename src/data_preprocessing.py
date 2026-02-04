@@ -3,6 +3,7 @@ from pathlib import Path
 import pandas as pd
 import numpy as np
 
+
 def download_dataset():
     """Download Raisin dataset if missing."""
     dataset_dir = Path("data/raw")
@@ -22,6 +23,7 @@ def download_dataset():
         print("Dataset downloaded successfully.")
     return dataset_file
 
+
 def load_data():
     """Load and preprocess Raisin dataset (standardized, labels binary)."""
     dataset_file = download_dataset()
@@ -38,16 +40,17 @@ def load_data():
 
     return X, y
 
+
 def train_test_split(X, y, test_size=0.2, random_seed=42):
     """
     Split dataset into train and test sets.
-    
+
     Args:
         X: features np.ndarray
         y: labels np.ndarray
         test_size: fraction of data for test
         random_seed: random seed for reproducibility
-    
+
     Returns:
         X_train, X_test, y_train, y_test
     """
@@ -61,6 +64,7 @@ def train_test_split(X, y, test_size=0.2, random_seed=42):
     y_train, y_test = y[:split_idx], y[split_idx:]
 
     return X_train, X_test, y_train, y_test
+
 
 def get_feature_names():
     """Return list of feature column names."""

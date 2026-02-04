@@ -7,6 +7,7 @@ from src.train import train_logistic_regression
 from src.model import predict
 from src.mlflow_lite import start_run, log_model, log_baseline
 
+
 def main():
     # ---------------- Hyperparameters ----------------
     LR = 0.01
@@ -27,7 +28,7 @@ def main():
     X, y = load_data()
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-    # ---------------- Split a small validation set from training (10%) ----------------
+    # ---------------- Split a small validation set from training (10%) ------
     val_size = int(0.1 * len(X_train))
     X_val, y_val = X_train[:val_size], y_train[:val_size]
     X_train2, y_train2 = X_train[val_size:], y_train[val_size:]
@@ -61,6 +62,7 @@ def main():
     y_pred, _ = predict(X_test, weights, bias)
     accuracy = np.mean(y_pred == y_test)
     print(f"Test Accuracy: {accuracy:.4f}")
+
 
 if __name__ == "__main__":
     main()

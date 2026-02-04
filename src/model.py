@@ -1,15 +1,19 @@
 import numpy as np
 
+
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
+
 
 def predict_proba(X, weights, bias):
     """Return probabilities for logistic regression"""
     return sigmoid(np.dot(X, weights) + bias)
 
+
 def predict(X, weights, bias):
     probs = predict_proba(X, weights, bias)
     return (probs >= 0.5).astype(int), probs
+
 
 def compute_loss(y, y_hat, lambda_=0.0, weights=None):
     """Binary cross-entropy with optional L2 regularization"""
