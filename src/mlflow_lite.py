@@ -98,3 +98,4 @@ def get_latest_run():
         params = json.load(file_handle)
 
     return {"run_dir": run_dir, "params": params}
+    

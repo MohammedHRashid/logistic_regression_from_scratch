@@ -76,3 +76,4 @@ def continuous_eval(X_new, y_new, run_dir=None, step=None):
     # Log metric
     log_metric(run_dir, "continuous_accuracy", acc, step=step)
     return acc
+    

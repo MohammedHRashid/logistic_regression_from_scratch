@@ -17,7 +17,7 @@ def train_logistic_regression(
     Train logistic regression with gradient descent.
     Logs training and validation metrics if run_id is provided.
     """
-    m, n = X.shape
+    n = X.shape[1]
     weights = np.zeros(n)
     bias = 0
     losses = []
