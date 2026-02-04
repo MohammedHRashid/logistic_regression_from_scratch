@@ -11,6 +11,7 @@ def predict_proba(X, weights, bias):
 
 
 def predict(X, weights, bias):
+    """Returns integer predictions"""
     probs = predict_proba(X, weights, bias)
     return (probs >= 0.5).astype(int), probs
 
