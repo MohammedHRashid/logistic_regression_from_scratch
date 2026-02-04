@@ -18,4 +18,6 @@ dependencies = [
 disable = [
     "C0103",
     "R0913"
+    "R0914",
+    "R0918"
 ]
