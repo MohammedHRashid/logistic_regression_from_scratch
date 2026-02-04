@@ -1,3 +1,14 @@
+"""
+Data preprocessing utilities for the Raisin dataset.
+
+Includes functions to:
+- Download the dataset from Kaggle if missing
+- Load and standardize features
+- Encode binary labels
+- Split data into training and test sets
+- Get feature column names
+"""
+
 import os
 from pathlib import Path
 import pandas as pd

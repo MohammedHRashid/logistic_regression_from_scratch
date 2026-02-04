@@ -1,3 +1,14 @@
+"""
+Main script to run logistic regression experiments.
+
+Includes steps to:
+- Load and preprocess data
+- Split into training, validation, and test sets
+- Train logistic regression model
+- Log baseline and metrics
+- Save trained model
+- Evaluate
+"""
 import os
 import json
 import numpy as np
@@ -28,7 +39,7 @@ def main():
     X, y = load_data()
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-    # ---------------- Split a small validation set from training ----------------
+    # ---------------- Split a small validation set from training ------------
     val_size = int(0.1 * len(X_train))
     X_val, y_val = X_train[:val_size], y_train[:val_size]
     X_train2, y_train2 = X_train[val_size:], y_train[val_size:]

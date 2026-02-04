@@ -1,3 +1,14 @@
+"""
+Lightweight MLflow-like logging utilities.
+
+Provides functions to:
+- Start a new run directory
+- Log parameters and metrics
+- Save/load model artifacts
+- Save/load baseline statistics
+- Fetch latest run
+"""
+
 import json
 import os
 from datetime import datetime
@@ -98,4 +109,3 @@ def get_latest_run():
         params = json.load(file_handle)
 
     return {"run_dir": run_dir, "params": params}
-    

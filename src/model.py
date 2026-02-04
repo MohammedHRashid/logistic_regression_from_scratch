@@ -1,3 +1,12 @@
+"""
+Core functions for logistic regression model.
+
+Provides:
+- Sigmoid activation
+- Probability prediction
+- Binary prediction
+- Loss computation with optional L2 regularization
+"""
 import numpy as np
 
 

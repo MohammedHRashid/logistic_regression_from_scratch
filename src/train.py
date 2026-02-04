@@ -1,3 +1,10 @@
+"""
+Training utilities for logistic regression.
+
+Includes functions to:
+- Train logistic regression with gradient descent
+- Log training and v
+"""
 import numpy as np
 from src.model import predict_proba, compute_loss
 from src.mlflow_lite import log_metric
@@ -17,7 +24,7 @@ def train_logistic_regression(
     Train logistic regression with gradient descent.
     Logs training and validation metrics if run_id is provided.
     """
-    n = X.shape[1]
+    m, n = X.shape
     weights = np.zeros(n)
     bias = 0
     losses = []

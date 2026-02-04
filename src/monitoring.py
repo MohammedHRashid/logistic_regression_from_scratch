@@ -21,7 +21,11 @@ def compute_data_drift(X_new, run_dir, log=False, step=None):
         raise ValueError("No baseline found. Cannot compute drift.")
 
     baseline_mean = np.array(baseline["mean"])
-    baseline_std = np.where(np.array(baseline["std"]) == 0, 1e-6, baseline["std"])
+    baseline_std = np.where(
+        np.array(
+            baseline["std"]) == 0,
+        1e-6,
+        baseline["std"])
 
     drift = np.abs(X_new.mean(axis=0) - baseline_mean) / baseline_std
 
@@ -76,4 +80,3 @@ def continuous_eval(X_new, y_new, run_dir=None, step=None):
     # Log metric
     log_metric(run_dir, "continuous_accuracy", acc, step=step)
     return acc
-    

@@ -1,3 +1,10 @@
+"""
+Model loading and prediction utilities for logistic regression.
+
+Includes functions to:
+- Load trained model weights and bias
+- Make predictions using the trained model
+"""
 import numpy as np
 from src.model import predict
 
@@ -14,7 +21,7 @@ def load_model(model_path="models/v1"):
 def make_prediction(X, model_path="models/v1"):
     """
     Make predictions using the logistic regression model.
-    
+
     Args:
         X (np.ndarray): Input features.
         model_path (str): Path to the model directory.
