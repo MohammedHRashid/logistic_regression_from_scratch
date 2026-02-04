@@ -23,4 +23,5 @@ jobs:
 
   
       - name: Run Pylint inside uv environment
-        run: uv run pylint src
+        run: export PYTHONPATH=$(pwd)/src 
+             uv run pylint src
