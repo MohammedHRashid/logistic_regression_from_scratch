@@ -42,8 +42,6 @@ What happens:
 - Model artifacts are saved to `models/<run-id>/weights.npy` and `bias.npy` and copied into the run directory (`log_model`).
 - Test accuracy is printed.
 
-If you want CLI flags (learning rate, epochs, etc.), you can add `argparse` in `src/main.py` (not present in repo).
-
 ---
 
 ## API (Flask) — run locally (non-Docker)
@@ -51,7 +49,7 @@ If you want CLI flags (learning rate, epochs, etc.), you can add `argparse` in `
 Start the Flask API:
 ```bash
 pip install numpy flask  # ensure deps
-python api/app.py
+python -m api/app.py
 ```
 By default `api/app.py` uses Flask dev server. For the container to be reachable externally it must bind to `0.0.0.0` — see Docker section / suggested change below.
 
@@ -117,70 +115,6 @@ docker run -p 5000:5000 \
 ```
 
 Important: ensure the Flask server inside the container binds to 0.0.0.0 (see next section). Also note the Dockerfile copies `models/` at build time; if you build before training, the image may not include model artifacts — mounting or training inside the container solves that.
-
----
-
-## Make the Flask server reachable from host (inside container)
-
-The default dev server `app.run(debug=True)` binds to `127.0.0.1` which is only accessible inside the container. Update `api/app.py` to bind to all interfaces:
-
-```python name=api/app.py url=https://github.com/MohammedHRashid/logistic_regression_from_scratch/blob/b9abaa7f23be54932d5fc0d720510d2525831c28/api/app.py#L74-L78
-if __name__ == "__main__":
-    # bind to 0.0.0.0 so the Flask dev server is reachable from the host when running in Docker
-    app.run(host="0.0.0.0", debug=True)
-```
-
-After this change, rebuild the Docker image and run with `-p 5000:5000` and you should be able to access `http://localhost:5000/` on the host.
-
-Production suggestion: use a WSGI server (gunicorn) and expose `0.0.0.0`:
-```dockerfile
-# example CMD for Dockerfile
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "api.app:app"]
-```
-and add `gunicorn` to dependencies.
-
----
-
-## Docker permission denied: /var/run/docker.sock (your error)
-
-If you see:
-```
-ERROR: permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: ...
-```
-This means your user cannot talk to the Docker daemon. Possible fixes:
-
-Quick check (requires sudo):
-```bash
-sudo docker run --rm hello-world
-```
-If that works, the daemon is running but your user lacks access.
-
-Linux: add user to `docker` group (recommended for convenience):
-```bash
-# add user to docker group
-sudo usermod -aG docker $USER
-
-# apply change to current session
-newgrp docker
-
-# test
-docker run --rm hello-world
-```
-Log out and log back in to make group membership persistent.
-
-If you don't want to add to docker group, prefix docker commands with `sudo`:
-```bash
-sudo docker build -t raisin-classifier .
-sudo docker run -p 5000:5000 raisin-classifier
-```
-
-WSL2 on Windows:
-- Ensure Docker Desktop is running on Windows.
-- In Docker Desktop Settings → Resources → WSL Integration, enable your WSL distro.
-- Restart Docker Desktop and your WSL shell.
-- Then run `docker run hello-world` from WSL.
-
-If you need exact step-by-step help for your environment (native Linux vs WSL2), tell me which and I will give tailored commands.
 
 ---
 
