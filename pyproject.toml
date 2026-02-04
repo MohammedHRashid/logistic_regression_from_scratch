@@ -13,3 +13,9 @@ dependencies = [
     "pylint>=4.0.4",
     "requests>=2.32.5",
 ]
+
+[tool.pylint]
+disable = [
+    "C0103",
+    "R0913"
+]
