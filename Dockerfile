@@ -28,4 +28,4 @@ EXPOSE 5000
 # ------------------------
 # 6. Run Flask API on container start
 # ------------------------
-CMD ["python", "app.py"]
+CMD ["python", "-m", "api.app"]
