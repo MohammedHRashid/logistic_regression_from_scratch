@@ -32,7 +32,7 @@ uv sync
 
 2. Train the model (run the main script):
 ```bash
-python -m src/main.py
+ python -m src.main
 ```
 What happens:
 - A run directory `mlruns/run_<timestamp>/` is created by `src/mlflow_lite.start_run()`.
@@ -106,15 +106,6 @@ Run container (map container port 5000 → host 5000):
 docker run -p 5000:5000 raisin-classifier
 ```
 
-Recommended for development: mount `models/` and `mlruns/` from host so the container can use trained artifacts you created locally:
-```bash
-docker run -p 5000:5000 \
-  -v "$(pwd)/models:/app/models" \
-  -v "$(pwd)/mlruns:/app/mlruns" \
-  raisin-classifier
-```
-
-Important: ensure the Flask server inside the container binds to 0.0.0.0 (see next section). Also note the Dockerfile copies `models/` at build time; if you build before training, the image may not include model artifacts — mounting or training inside the container solves that.
 
 ---
 
