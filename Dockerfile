@@ -14,6 +14,7 @@ WORKDIR /app
 COPY src/ src/
 COPY api/ api/
 COPY models/ models/
+COPY mlruns/ mlruns/
 
 # ------------------------
 # 4. Install minimal dependencies
